@@ -4,166 +4,165 @@
   <meta charset="UTF-8">
   <title>山东农业大学</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 引入 Google Fonts 现代无衬线字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body, h1, a, p, footer {
+    :root {
+      --primary: #2fae58;
+      --primary-light: #eafbee;
+      --primary-dark: #206e3a;
+      --accent: #baf9bc;
+      --white: #fff;
+      --gray: #f4f6f9;
+      --radius: 20px;
+      --shadow: 0 8px 32px rgba(47, 174, 88, 0.12);
+    }
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
-      font-family: 'Segoe UI', 'Microsoft Yahei', Arial, sans-serif;
-      background: linear-gradient(135deg, #e7f9ed 0%, #e1ffe3 100%);
+      font-family: 'Inter', 'Segoe UI', 'Microsoft Yahei', Arial, sans-serif;
+      background: var(--gray);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      position: relative;
+      justify-content: flex-start;
+      align-items: center;
       overflow-x: hidden;
     }
 
-    /* 装饰元素 - 顶部叶子 */
-    .leaf {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      background: url('https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/leaf-green.svg') no-repeat center/contain;
-      opacity: 0.25;
-      z-index: 0;
+    header {
+      width: 100vw;
+      position: relative;
+      margin-bottom: 0;
+      z-index: 2;
+      background: var(--primary-light);
+      box-shadow: 0 4px 24px rgba(47, 174, 88, 0.10);
     }
-    .leaf.top-left { top: -40px; left: -40px; transform: rotate(20deg);}
-    .leaf.top-right { top: -30px; right: -50px; transform: scaleX(-1) rotate(-12deg);}
-    .leaf.bottom-left { bottom: -60px; left: -30px; transform: rotate(-15deg);}
-    .leaf.bottom-right { bottom: -40px; right: -50px; transform: scaleY(-1) rotate(18deg);}
+    .banner-img {
+      display: block;
+      width: 100vw;
+      max-height: 320px;
+      object-fit: cover;
+      border-bottom-left-radius: var(--radius);
+      border-bottom-right-radius: var(--radius);
+      box-shadow: 0 6px 20px rgba(47,174,88,.08);
+    }
+    .banner-title {
+      position: absolute;
+      left: 50%;
+      top: 38px;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.82);
+      padding: 18px 38px;
+      border-radius: 36px;
+      font-size: 2.6rem;
+      color: var(--primary-dark);
+      font-weight: 700;
+      letter-spacing: 2px;
+      box-shadow: 0 2px 16px rgba(47,174,88,.07);
+      text-shadow: 0 2px 12px rgba(47,174,88,.08);
+      z-index: 2;
+      white-space: nowrap;
+    }
+    @media (max-width: 600px) {
+      .banner-title {
+        padding: 8px 12vw;
+        font-size: 1.25rem;
+        top: 12px;
+      }
+      .banner-img {
+        max-height: 160px;
+      }
+    }
 
     .container {
-      max-width: 500px;
-      margin: 60px auto 0 auto;
-      background: rgba(255,255,255,0.92);
-      border-radius: 18px;
-      box-shadow: 0 8px 32px rgba(70, 175, 102, 0.12);
-      padding: 38px 34px 28px 34px;
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      margin-top: -38px;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 42px 34px 30px 34px;
       text-align: center;
       position: relative;
-      z-index: 1;
+      z-index: 3;
+      min-height: 300px;
     }
-    .container:before {
-      content: "";
-      display: block;
-      position: absolute;
-      left: 24px; top: -30px;
-      width: 50px; height: 50px;
-      background: url('https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/sprout.svg') no-repeat center/contain;
-      opacity: 0.6;
-      z-index: 2;
+    @media (max-width: 600px) {
+      .container {
+        max-width: 98vw;
+        padding: 18px 3vw 14px 3vw;
+        margin-top: -18px;
+      }
     }
-    h1 {
-      font-size: 2.2rem;
-      color: #238c3f;
-      letter-spacing: 1px;
-      margin-bottom: 26px;
-      font-weight: 700;
-      text-shadow: 0 2px 6px rgba(70,175,102,.10);
-    }
+
     .nav-links {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      margin: 36px 0 20px 0;
+      gap: 24px;
+      margin: 45px 0 18px 0;
     }
-    .nav-links a {
-      display: block;
-      padding: 15px 0;
-      background: linear-gradient(90deg, #6fd870 0%, #baf9bc 100%);
-      color: #fff;
-      font-size: 1.18rem;
-      font-weight: 500;
-      border-radius: 32px;
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px 18px 18px;
+      background: linear-gradient(90deg, #2fae58 0%, #86e993 100%);
+      color: var(--white);
+      font-size: 1.15rem;
+      font-weight: 600;
+      border-radius: 44px;
       text-decoration: none;
-      box-shadow: 0 2px 8px rgba(70,175,102,.08);
-      transition: background .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 2px 10px rgba(47,174,88,.10);
+      transition: background .18s, transform .18s, box-shadow .18s;
+      border: none;
       position: relative;
-      border: 2px solid #c0f5bb;
+      overflow: hidden;
+      min-height: 52px;
     }
-    .nav-links a:hover {
-      background: linear-gradient(90deg, #43b34d 0%, #8ee79c 100%);
-      transform: scale(1.04) rotate(-1.5deg);
-      box-shadow: 0 4px 14px 0 rgba(70,175,102,.14);
+    .nav-link:hover {
+      background: linear-gradient(90deg, #206e3a 0%, #6fd870 100%);
+      transform: scale(1.03) translateY(-2px);
+      box-shadow: 0 6px 18px rgba(47,174,88,.16);
     }
-    .nav-links a::after {
-      content: '';
-      display: inline-block;
+    .nav-link .icon {
+      width: 26px;
+      height: 26px;
+      margin-right: 16px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 6px rgba(47,174,88,0.11));
+    }
+    .nav-link .arrow {
       width: 28px;
       height: 28px;
-      background: url('https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/arrow-green.svg') no-repeat center/contain;
-      position: absolute;
-      right: 20px; top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.85;
+      margin-left: 14px;
+      flex-shrink: 0;
+      opacity: 0.78;
+      filter: drop-shadow(0 2px 6px rgba(47,174,88,0.11));
+      transition: transform .2s;
     }
-
-    .nav-links a:nth-child(1)::before {
-      content: '';
-      display: inline-block;
-      width: 22px;
-      height: 22px;
-      background: url('https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/university.svg') no-repeat center/contain;
-      position: absolute;
-      left: 18px; top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.8;
-    }
-    .nav-links a:nth-child(2)::before {
-      content: '';
-      display: inline-block;
-      width: 22px;
-      height: 22px;
-      background: url('https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/system.svg') no-repeat center/contain;
-      position: absolute;
-      left: 18px; top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.8;
-    }
-    .nav-links a:nth-child(3)::before {
-      content: '';
-      display: inline-block;
-      width: 22px;
-      height: 22px;
-      background: url('https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/wechat.svg') no-repeat center/contain;
-      position: absolute;
-      left: 18px; top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.8;
-    }
-    .nav-links a:nth-child(4)::before {
-      content: '';
-      display: inline-block;
-      width: 22px;
-      height: 22px;
-      background: url('https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/smartcampus.svg') no-repeat center/contain;
-      position: absolute;
-      left: 18px; top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.8;
+    .nav-link:hover .arrow {
+      transform: translateX(6px) scale(1.12);
     }
 
     .note {
-      color:#388f4b;
-      font-size:1rem;
-      margin-bottom: 5px;
-      margin-top: 4px;
+      color: var(--primary-dark);
+      font-size: 1.07rem;
+      margin-bottom: 8px;
+      margin-top: 10px;
       font-style: italic;
       letter-spacing: 0.5px;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        max-width: 96vw;
-        padding: 18px 3vw 14px 3vw;
-      }
-      h1 {
-        font-size: 1.35rem;
-      }
+      background: var(--primary-light);
+      border-radius: 12px;
+      padding: 8px 0;
+      box-shadow: 0 2px 8px rgba(47,174,88,.07);
+      width: 92%;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     footer {
@@ -172,61 +171,81 @@
       color: #2e4e2a;
       text-align: center;
       font-size: 1rem;
-      padding: 18px 0 12px 0;
+      padding: 22px 0 16px 0;
       letter-spacing: 0.5px;
-      margin-top: 42px;
-      box-shadow: 0 -2px 10px rgba(70,175,102,.07);
-      border-top: 1.5px solid #baf9bc;
+      margin-top: 48px;
+      box-shadow: 0 -2px 12px rgba(47,174,88,.08);
+      border-top: 2px solid var(--accent);
       z-index: 1;
       position: relative;
     }
 
     .contact-link {
-      color: #238c3f;
+      color: var(--primary);
       text-decoration: underline;
-      font-weight: 500;
+      font-weight: 600;
       transition: color .2s;
     }
     .contact-link:hover {
-      color: #2db06c;
+      color: #43b34d;
     }
   </style>
   <script type="text/javascript">
+    // 微软Clarity分析脚本
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "t03r2fy0ch");
-</script>
+  </script>
 </head>
 <body>
-  <!-- 装饰叶子 -->
-  <div class="leaf top-left"></div>
-  <div class="leaf top-right"></div>
-  <div class="leaf bottom-left"></div>
-  <div class="leaf bottom-right"></div>
-  <div class="container">
-    <h1>欢迎来到永雏塔菲大学！</h1>
+  <header>
+    <img src="./banner.jpg" alt="山东农业大学俯瞰图" class="banner-img">
+    <div class="banner-title">欢迎来到山东农业大学！</div>
+  </header>
+  <main class="container">
     <div class="nav-links">
-      <a href="https://www.sdau.edu.cn/" target="_blank" id="site">学校官网</a>
-      <a href="http://xjw.sdau.edu.cn/jwglxt/xtgl/login_slogin.html" target="_blank" id="jwxt">教务系统</a>
-      <a href="https://mp.weixin.qq.com/s/pIovgr8lAuy8ZbdxQz1mgw" target="_blank" id="mp">学校公众号</a>
-      <a href="https://my.sdau.edu.cn/new/index.html" target="_blank" id="campus">智慧校园</a>
+      <a href="https://www.sdau.edu.cn/" target="_blank" class="nav-link" id="site">
+        <img src="https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/university.svg" alt="学校官网" class="icon">
+        学校官网
+        <img src="https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/arrow-green.svg" alt="前往官网" class="arrow">
+      </a>
+      <a href="http://xjw.sdau.edu.cn/jwglxt/xtgl/login_slogin.html" target="_blank" class="nav-link" id="jwxt">
+        <img src="https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/system.svg" alt="教务系统" class="icon">
+        教务系统
+        <img src="https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/arrow-green.svg" alt="前往教务系统" class="arrow">
+      </a>
+      <a href="https://mp.weixin.qq.com/s/pIovgr8lAuy8ZbdxQz1mgw" target="_blank" class="nav-link" id="mp">
+        <img src="https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/wechat.svg" alt="学校公众号" class="icon">
+        学校公众号
+        <img src="https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/arrow-green.svg" alt="前往公众号" class="arrow">
+      </a>
+      <a href="https://my.sdau.edu.cn/new/index.html" target="_blank" class="nav-link" id="campus">
+        <img src="https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/smartcampus.svg" alt="智慧校园" class="icon">
+        智慧校园
+        <img src="https://cdn.jsdelivr.net/gh/arabidopsisdev/assets/arrow-green.svg" alt="前往智慧校园" class="arrow">
+      </a>
     </div>
-    <p class="note">选择以上入口，开启你的绿色校园之旅</p>
-  </div>
+    <p class="note">选择以上入口，开启你的神人校园之旅</p>
+  </main>
   <footer>
     Copyright 2025 山东农业大学&nbsp;&nbsp;|&nbsp;&nbsp;请联系：
     <a class="contact-link" href="mailto:arab@methodbox.top">arab@methodbox.top</a>
   </footer>
   <script>
-    // 简单点击反馈
-    document.querySelectorAll('.nav-links a').forEach(el => {
-      el.addEventListener('click', function() {
-        el.style.background = 'linear-gradient(90deg, #e1ffe3 0%, #c9f7cd 100%)';
+    // 现代化点击反馈
+    document.querySelectorAll('.nav-link').forEach(el => {
+      el.addEventListener('mousedown', function() {
+        el.style.background = 'linear-gradient(90deg, #c3f5d3 0%, #e8fff0 100%)';
+      });
+      el.addEventListener('mouseup', function() {
         setTimeout(() => {
           el.style.background = '';
-        }, 240);
+        }, 180);
+      });
+      el.addEventListener('mouseleave', function() {
+        el.style.background = '';
       });
     });
   </script>

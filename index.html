@@ -283,7 +283,7 @@
     let currentStroke = null;
 
     // 请替换为你的服务器公网IP或域名
-    const ws = new WebSocket('ws://121.43.125.202:8080');
+    const ws = new WebSocket('wss://121.43.125.202:8080');
 
     function drawStroke(s) {
       ctx.strokeStyle = s.color;

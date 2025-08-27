@@ -167,52 +167,15 @@
       transition: color .2s;
     }
     .contact-link:hover { color: #43b34d; }
-
-    /* ---- 画板区域样式 ---- */
-    #board-toolbar {
-      margin: 30px auto 10px auto;
-      display: flex;
-      gap: 18px;
-      justify-content: center;
-    }
-    #board-toolbar button {
-      padding: 10px 22px;
-      font-size: 1.1rem;
-      border-radius: 22px;
-      border: none;
-      background: linear-gradient(90deg,#2fae58 0%,#86e993 100%);
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background .15s, transform .15s;
-      box-shadow: 0 2px 8px rgba(47,174,88,.08);
-    }
-    #board-toolbar button:hover {background: linear-gradient(90deg,#206e3a 0%,#6fd870 100%);}
-    #whiteboard {
-      display: block;
-      margin: 0 auto 18px auto;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 4px 16px rgba(47,174,88,.09);
-      border: 2px solid var(--primary-light);
-      touch-action: none;
-      width: 95vw;
-      max-width: 900px;
-      height: 400px;
-    }
-    @media (max-width: 600px) {
-      #whiteboard {height: 240px;}
-      #board-toolbar button {font-size: 0.98rem;}
-    }
   </style>
   <!-- 可选：网站分析脚本 -->
-  <script type="text/javascript">
+<script type="text/javascript">
     (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "t03r2fy0ch");
-  </script>
+</script>
 </head>
 <body>
   <header>
@@ -244,19 +207,12 @@
     </div>
     <p class="note">选择以上入口，开启你的神人校园之旅</p>
   </main>
-  <!-- ----------- 在线协同画板 ----------- -->
-  <div id="board-toolbar">
-    <button id="tool-pen">✏️ 笔</button>
-    <button id="tool-eraser">🧽 橡皮</button>
-    <button id="tool-clear">🗑️ 清空</button>
-  </div>
-  <canvas id="whiteboard" width="900" height="400"></canvas>
   <footer>
     Copyright 2025 Arabidopsis &nbsp;&nbsp;|&nbsp;&nbsp;请联系：
     <a class="contact-link" href="mailto:arab@methodbox.top">arab@methodbox.top</a>
   </footer>
   <script>
-    // 你的原本的按钮交互
+    // 按钮交互
     document.querySelectorAll('.nav-link').forEach(el => {
       el.addEventListener('mousedown', function() {
         el.style.background = 'linear-gradient(90deg, #c3f5d3 0%, #e8fff0 100%)';
@@ -268,108 +224,6 @@
         el.style.background = '';
       });
     });
-
-    // ----------- 画板JS -----------
-    let tool = 'pen';
-    document.getElementById('tool-pen').onclick = () => tool = 'pen';
-    document.getElementById('tool-eraser').onclick = () => tool = 'eraser';
-    document.getElementById('tool-clear').onclick = clearBoard;
-
-    const canvas = document.getElementById('whiteboard');
-    const ctx = canvas.getContext('2d');
-    let drawing = false;
-    let lastPoint = null;
-    let strokes = [];
-    let currentStroke = null;
-
-    // 请替换为你的服务器公网IP或域名
-    const ws = new WebSocket('wss://121.43.125.202:8080');
-
-    function drawStroke(s) {
-      ctx.strokeStyle = s.color;
-      ctx.lineWidth = s.width;
-      ctx.lineJoin = 'round';
-      ctx.lineCap = 'round';
-      const pts = s.points;
-      if (!pts || pts.length < 2) return;
-      ctx.beginPath();
-      ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < pts.length; i++) {
-        ctx.lineTo(pts[i].x, pts[i].y);
-      }
-      ctx.stroke();
-    }
-
-    function redraw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      strokes.forEach(drawStroke);
-    }
-
-    // 鼠标/触摸事件兼容
-    function getXY(e) {
-      if (e.touches) {
-        const rect = canvas.getBoundingClientRect();
-        return {
-          x: e.touches[0].clientX - rect.left,
-          y: e.touches[0].clientY - rect.top
-        };
-      } else {
-        return { x: e.offsetX, y: e.offsetY };
-      }
-    }
-
-    // 开始画一笔
-    function startDraw(e) {
-      drawing = true;
-      lastPoint = getXY(e);
-      currentStroke = {
-        tool,
-        color: tool === 'pen' ? '#206e3a' : '#fff',
-        width: tool === 'pen' ? 3 : 16,
-        points: [lastPoint]
-      };
-    }
-    function drawMove(e) {
-      if (!drawing) return;
-      const pt = getXY(e);
-      currentStroke.points.push(pt);
-      drawStroke(currentStroke); // 本地预览
-      lastPoint = pt;
-    }
-    function endDraw(e) {
-      if (!drawing) return;
-      drawing = false;
-      ws.send(JSON.stringify({ type: 'draw', stroke: currentStroke }));
-      currentStroke = null;
-    }
-
-    // 鼠标事件
-    canvas.onmousedown = startDraw;
-    canvas.onmousemove = drawMove;
-    canvas.onmouseup = endDraw;
-    canvas.onmouseleave = () => drawing = false;
-    // 触摸事件
-    canvas.addEventListener('touchstart', startDraw);
-    canvas.addEventListener('touchmove', function(e) { drawMove(e); e.preventDefault(); });
-    canvas.addEventListener('touchend', endDraw);
-
-    ws.onmessage = (msg) => {
-      const data = JSON.parse(msg.data);
-      if (data.type === 'init') {
-        strokes = data.strokes || [];
-        redraw();
-      } else if (data.type === 'draw') {
-        strokes.push(data.stroke);
-        drawStroke(data.stroke);
-      } else if (data.type === 'clear') {
-        strokes = [];
-        redraw();
-      }
-    };
-
-    function clearBoard() {
-      ws.send(JSON.stringify({ type: 'clear' }));
-    }
   </script>
 </body>
 </html>
